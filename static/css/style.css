@@ -1,4 +1,16 @@
+body {
+    background: linear-gradient(90deg, #aea4e3, #d3ffe8);
+}
+
+nav {
+    background-color: transparent;
+}
+
 .list-group-item {
     display: flex;
     flex-direction: row;
+    background-color: transparent;
+    border: 1px;
 }
+
+

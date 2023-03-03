@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Удаление задачи{% endblock %}
+{% block content %}
+    <div class="container text-center">
+        <h2 class="mb-5 text-center">Удаление задачи</h2>
+        <p>Заголовок: {{ task.summary }}</p>
+        <p>Подробное описание: {{ task.description }}</p>
+        <p>Статус: {{ task.status }}</p>
+        <p>Тип: {{ task.types.first.name }}</p>
+        <p>Создана: {{ task.created_at }}</p>
+        <form class="mt-5" action="{% url 'task_confirm_delete' task.pk %}" method="post">
+            {% csrf_token %}
+            <p class="d-inline mr-5 mt-5"><a class="btn btn-dark" href="{% url 'index' %}">Главная</a></p>
+            <p class="d-inline ml-5"><input class="btn btn-dark" type="submit" value="Удалить"></p>
+        </form>
+    </div>
+{% endblock %}

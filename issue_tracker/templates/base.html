@@ -12,12 +12,12 @@
 <body>
 <nav class="navbar">
     <div class="container">
-        <ul class="list-group list-group-flush">
+        <ul class="list-group-flush">
             <li class="list-group-item">
                 <a href="{% url 'index' %}"
-                   class="list-group-item list-group-item-action list-group-item-secondary mx-1">Главная</a>
+                   class="list-group-item list-group-item-secondary mx-1">Главная</a>
                 <a href="{% url 'task_add' %}"
-                   class="list-group-item list-group-item-action list-group-item-secondary mx-1">Создать</a>
+                   class="list-group-item list-group-item-secondary mx-1">Создать</a>
                 {% block menu %}{% endblock %}
         </ul>
     </div>

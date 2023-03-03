@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}Просмотр задачи{% endblock %}
 {% block menu %}
-    {#    <a class="list-group-item list-group-item-action list-group-item-secondary mx-1"#}
-    {#       href="{% url 'update_task_view' task.pk %}">Редактировать</a>#}
-    {#    <a class="list-group-item list-group-item-action list-group-item-secondary mx-1"#}
-    {#       href="{% url 'task_delete' task.pk %}">Удалить</a>#}
+    <a class="list-group-item list-group-item-secondary mx-1"
+       href="{% url 'task_update' task.pk %}">Редактировать</a>
+    <a class="list-group-item list-group-item-secondary mx-1"
+       href="{% url 'task_delete' task.pk %}">Удалить</a>
 {% endblock %}
 {% block content %}
     <div class="row mt-5 d-flex justify-content-center">

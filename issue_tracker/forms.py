@@ -5,8 +5,14 @@ from issue_tracker.models import Task, Status, Type
 
 
 class TaskForm(forms.ModelForm):
-    status = forms.ModelChoiceField(queryset=Status.objects.all(), label='Статус')
-    types = forms.ModelMultipleChoiceField(queryset=Type.objects.all(), label='Тип')
+    status = forms.ModelChoiceField(
+        queryset=Status.objects.all(),
+        label='Статус'
+    )
+    types = forms.ModelMultipleChoiceField(
+        queryset=Type.objects.all(),
+        label='Тип'
+    )
 
     class Meta:
         model = Task
