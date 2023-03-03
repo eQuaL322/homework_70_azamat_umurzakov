@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Просмотр задачи{% endblock %}
+{% block menu %}
+    {#    <a class="list-group-item list-group-item-action list-group-item-secondary mx-1"#}
+    {#       href="{% url 'update_task_view' task.pk %}">Редактировать</a>#}
+    {#    <a class="list-group-item list-group-item-action list-group-item-secondary mx-1"#}
+    {#       href="{% url 'task_delete' task.pk %}">Удалить</a>#}
+{% endblock %}
+{% block content %}
+    <div class="row mt-5 d-flex justify-content-center">
+        <h2>Детали задачи</h2>
+    </div>
+    <div class="container bg-light row mt-5 card pt-3 mx-2">
+        <p>Заголовок: {{ task.summary }}</p>
+        <p>Подробное описание: {{ task.description }}</p>
+        <p>Статус: {{ task.status }}</p>
+        <p>Тип: {{ task.types.first.name }}</p>
+        <p>Создана: {{ task.created_at }}</p>
+    </div>
+{% endblock %}
