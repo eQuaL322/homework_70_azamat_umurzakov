@@ -16,5 +16,6 @@
         <p>Статус: {{ task.status }}</p>
         <p>Тип: {{ task.types.first.name }}</p>
         <p>Создана: {{ task.created_at }}</p>
+        <p>Последнее изменение: {{ task.updated_at }}</p>
     </div>
 {% endblock %}
