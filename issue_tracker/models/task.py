@@ -7,6 +7,7 @@ class Task(models.Model):
         verbose_name="Краткое описание"
     )
     description = models.TextField(
+        max_length=2000,
         blank=True,
         verbose_name="Полное описание"
     )

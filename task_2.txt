@@ -1,0 +1,8 @@
+1.  from django.utils import timezone
+    now = timezone.now()
+    last_month = now - timedelta(days=30)
+    closed_tasks = Task.objects.filter(status=3, updated_at__gte=last_month)
+
+2.
+
+3. query_set = Task.objects.filter(summary__icontains ='Bug').exclude(status=3)
