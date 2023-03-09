@@ -59,3 +59,7 @@ class TaskForm(forms.ModelForm):
         if len(Task.objects.filter(summary=summary)) >= 1:
             raise ValidationError('Заголовок с таким именем уже существует!')
         return summary
+
+
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=20, required=False, label='Найти')
