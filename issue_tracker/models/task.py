@@ -1,5 +1,7 @@
 from django.db import models
 
+from issue_tracker.models.project import Project
+
 
 class Task(models.Model):
     summary = models.CharField(
@@ -26,6 +28,13 @@ class Task(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
         verbose_name="Дата и время обновления"
+    )
+    project = models.ForeignKey(
+        'issue_tracker.Project',
+        on_delete=models.CASCADE,
+        related_name='tasks',
+        verbose_name='Проект',
+        null=True
     )
 
     def __str__(self):

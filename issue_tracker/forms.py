@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.core.validators import BaseValidator, MinLengthValidator
 
-from issue_tracker.models import Task, Status, Type
+from issue_tracker.models import Task, Status, Type, Project
 
 
 class LimitLenValidator(BaseValidator):
@@ -63,3 +63,41 @@ class TaskForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     search = forms.CharField(max_length=20, required=False, label='Найти')
+
+
+class ProjectForm(forms.ModelForm):
+    name = forms.CharField(
+        validators=(
+            LimitLenValidator(),
+            MinLengthValidator(
+                limit_value=2,
+                message='Минимальная длина заголовка 2 символа!'
+            ),
+        )
+    )
+    description = forms.CharField(
+        validators=(MinLengthValidator(
+            limit_value=10,
+            message='Минимальная длина описания 10 символов!'
+        ),
+                    LimitLenValidator(max_value=2000),
+        ),
+        widget=forms.Textarea
+    )
+
+    class Meta:
+        start_date = forms.DateField(
+            label='Дата начала',
+            required=True
+        )
+        end_date = forms.DateField(
+            label='Дата окончания',
+            required=False,
+        )
+        model = Project
+        fields = ('name', 'description', 'start_date', 'end_date')
+        labels = {
+            'name': 'Заголовок задачи',
+            'description': 'Подробное описание задачи',
+            'end_date': 'Дата окончания',
+        }
