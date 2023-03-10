@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import TemplateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import TemplateView, UpdateView, DeleteView
 
 from issue_tracker.forms import TaskForm
 from issue_tracker.models import Task
@@ -30,34 +31,16 @@ class TaskCreateView(TemplateView):
         return render(request, 'task_add.html', {'form': form})
 
 
-class TaskUpdateView(TemplateView):
+class TaskUpdateView(UpdateView):
     template_name = 'task_update.html'
+    form_class = TaskForm
+    model = Task
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['task'] = get_object_or_404(Task, pk=kwargs['pk'])
-        context['form'] = TaskForm(instance=context['task'])
-        return context
-
-    def post(self, request, *args, **kwargs):
-        task = get_object_or_404(Task, pk=kwargs['pk'])
-        form = TaskForm(request.POST, instance=task)
-        if form.is_valid():
-            form.save()
-            return redirect('task_detail', pk=task.pk)
-        return render(request, 'task_update.html',
-                      context={'form': form, 'task': task})
+    def get_success_url(self):
+        return reverse('task_detail', kwargs={'pk': self.object.pk})
 
 
-class TaskDeleteView(TemplateView):
+class TaskDeleteView(DeleteView):
     template_name = 'task_delete.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['task'] = get_object_or_404(Task, pk=kwargs['pk'])
-        return context
-
-    def post(self, request, *args, **kwargs):
-        task = get_object_or_404(Task, pk=kwargs['pk'])
-        task.delete()
-        return redirect('index')
+    model = Task
+    success_url = reverse_lazy('index')

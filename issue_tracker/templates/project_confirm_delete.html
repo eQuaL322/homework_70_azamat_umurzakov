@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Удаление проекта{% endblock %}
+{% block content %}
+    <div class="container text-center">
+        <h2 class="mb-5 text-center">Удаление проекта</h2>
+        <p>Заголовок: {{ project.name }}</p>
+        <p>Подробное описание: {{ project.description }}</p>
+        <p>Дата начала: {{ project.start_date }}</p>
+        <p>Дата окончания: {{ project.end_date }}</p>
+        <form class="mt-5" action="{% url 'project_confirm_delete' project.pk %}" method="post">
+            {% csrf_token %}
+            <p class="d-inline mr-5 mt-5"><a class="btn btn-dark" href="{% url 'projects_view' %}">Главная</a></p>
+            <p class="d-inline ml-5"><input class="btn btn-dark" type="submit" value="Удалить"></p>
+        </form>
+    </div>
+{% endblock %}

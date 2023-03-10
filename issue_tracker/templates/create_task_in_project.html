@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Новая задача{% endblock %}
+{% block content %}
+    <div class="my-5 text-center">
+        <h2>Добавляем новую задачу</h2>
+    </div>
+    <div class="row mx-5 g-3 align-items-center">
+        <form action="{% url 'task_create_from_project' project_id=project_id %}" method="post">
+            {% include 'partial/task_form.html' with button_text='Добавить' %}
+        </form>
+    </div>
+{% endblock %}

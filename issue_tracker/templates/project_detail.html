@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}Просмотр проекта{% endblock %}
 {% block menu %}
-    {#    <a class="list-group-item list-group-item-secondary mx-1"#}
-    {#       href="{% url 'task_update' task.pk %}">Редактировать</a>#}
-    {#    <a class="list-group-item list-group-item-secondary mx-1"#}
-    {#       href="{% url 'task_delete' task.pk %}">Удалить</a>#}
+    <a href="{% url 'project_delete' project.pk %}"
+       class="list-group-item list-group-item-secondary mx-1">Удалить проект</a>
 {% endblock %}
 {% block content %}
     <div class="row mt-5 d-flex justify-content-center">
@@ -15,6 +13,7 @@
         <p>Подробное описание: {{ project.description }}</p>
         <p>Дата начала: {{ project.start_date }}</p>
     </div>
+    <a href="{% url 'task_create_from_project' project_id=project.pk %}" class="btn btn-primary">Добавить задачу</a>
     <div class="row mt-5 d-flex justify-content-center">
         <h2>Список задач</h2>
     </div>

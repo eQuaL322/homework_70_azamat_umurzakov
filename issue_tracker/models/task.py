@@ -34,7 +34,6 @@ class Task(models.Model):
         on_delete=models.CASCADE,
         related_name='tasks',
         verbose_name='Проект',
-        null=True
     )
 
     def __str__(self):
