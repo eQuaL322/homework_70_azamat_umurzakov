@@ -1,4 +1,5 @@
 # views.py
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 
@@ -8,26 +9,26 @@ from issue_tracker.models import Project, Task
 
 class ProjectListView(ListView):
     model = Project
-    template_name = 'project_list.html'
+    template_name = 'project/project_list.html'
     context_object_name = 'projects'
 
 
 class ProjectDetailView(DetailView):
     model = Project
-    template_name = 'project_detail.html'
+    template_name = 'project/project_detail.html'
 
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     form_class = ProjectForm
-    template_name = 'project_create.html'
+    template_name = 'project/project_create.html'
 
     def get_success_url(self):
         return reverse('project_detail', kwargs={'pk': self.object.pk})
 
 
 class ProjectDeleteView(DeleteView):
-    template_name = 'project_confirm_delete.html'
+    template_name = 'project/project_confirm_delete.html'
     model = Project
 
     def get_success_url(self):
@@ -37,7 +38,7 @@ class ProjectDeleteView(DeleteView):
 class TaskCreateProjectView(CreateView):
     model = Task
     form_class = TaskForm
-    template_name = 'create_task_in_project.html'
+    template_name = 'project/create_task_in_project.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

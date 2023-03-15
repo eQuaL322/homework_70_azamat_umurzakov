@@ -14,13 +14,28 @@
     <div class="container">
         <ul class="list-group-flush">
             <li class="list-group-item">
+                {% if user.is_authenticated %}
+                    <p class="list-group-item list-group-item-secondary mx-1">Привет, {{ user.username }}!</p>
+                {% endif %}
                 <a href="{% url 'index' %}"
                    class="list-group-item list-group-item-secondary mx-1">Главная</a>
-                <a href="{% url 'task_add' %}"
-                   class="list-group-item list-group-item-secondary mx-1">Создать задачу</a>
                 <a href="{% url 'projects_view' %}"
                    class="list-group-item list-group-item-secondary mx-1">Проекты</a>
                 {% block menu %}{% endblock %}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'task_add' %}"
+                       class="list-group-item list-group-item-secondary mx-1">Создать задачу</a>
+                    <a href="{% url 'project_add' %}"
+                       class="list-group-item list-group-item-secondary mx-1">Создать проект</a>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" class="list-group-item list-group-item-danger mx-1" value="Выйти">
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="list-group-item list-group-item-secondary mx-1">Войти</a>
+                {% endif %}
+
+            </li>
         </ul>
     </div>
 </nav>
