@@ -101,3 +101,12 @@ class ProjectForm(forms.ModelForm):
             'description': 'Подробное описание задачи',
             'end_date': 'Дата окончания',
         }
+
+
+class ProjectAddUserForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['users']
+        widgets = {
+            'users': forms.CheckboxSelectMultiple
+        }

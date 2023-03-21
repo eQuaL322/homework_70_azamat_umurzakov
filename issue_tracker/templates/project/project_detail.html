@@ -14,8 +14,18 @@
         <p>Заголовок: {{ project.name }}</p>
         <p>Подробное описание: {{ project.description }}</p>
         <p>Дата начала: {{ project.start_date }}</p>
+        {% if user.is_authenticated %}
+            <div>
+                <p class="mt-2">Пользователи в проекте: {% for user in project.users.all %}
+                    {{ user.username }}
+                {% endfor %}</p>
+                <a href="{% url 'project_add_user' project.pk %}" class="btn btn-primary mt-4 mb-2">Добавить/Удалить
+                    пользователя</a>
+            </div>
+        {% endif %}
     </div>
-    <a href="{% url 'task_create_from_project' project_id=project.pk %}" class="btn btn-secondary mt-2 ml-2">Добавить задачу</a>
+    <a href="{% url 'task_create_from_project' project_id=project.pk %}" class="btn btn-secondary mt-2 ml-2">Добавить
+        задачу</a>
     <div class="row mt-5 d-flex justify-content-center">
         <h2>Список задач</h2>
     </div>

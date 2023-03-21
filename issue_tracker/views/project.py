@@ -1,10 +1,14 @@
 # views.py
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, CreateView, DeleteView
+from django.views import View
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 
-from issue_tracker.forms import ProjectForm, TaskForm
+from issue_tracker.forms import ProjectForm, TaskForm, ProjectAddUserForm
 from issue_tracker.models import Project, Task
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 class ProjectListView(ListView):
@@ -53,3 +57,27 @@ class TaskCreateProjectView(CreateView):
     def get_success_url(self):
         project_id = self.kwargs['project_id']
         return reverse_lazy('project_detail', args=[project_id])
+
+
+class GroupPermission(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.groups.filter(name__in=['TeamLead', 'Manager']).exists()
+
+
+class ProjectAddUserView(GroupPermission, UpdateView):
+    model = Project
+    template_name = 'project/projects_user_add.html'
+    form_class = ProjectAddUserForm
+
+    def form_valid(self, form):
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+        user = form.save(commit=False)
+        user.project = project
+        user.save()
+        form.save_m2m()
+        return redirect('project_detail', pk=project.pk)
+
+    def has_permission(self):
+        project = self.get_object()
+        user = self.request.user
+        return user in project.users.all() and super().has_permission()

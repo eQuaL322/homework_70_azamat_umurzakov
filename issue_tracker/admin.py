@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from issue_tracker.models import Task, Type, Status
+from issue_tracker.models import Task, Type, Status, Project
 
 
 class TaskAdmin(admin.ModelAdmin):
@@ -30,6 +30,14 @@ class StatusAdmin(admin.ModelAdmin):
     ordering = ('name',)
 
 
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'description', 'start_date', 'end_date']
+    list_filter = ['id', 'name', 'description', 'start_date', 'end_date']
+    search_fields = ['id', 'name']
+    fields = ['name', 'description', 'start_date', 'end_date', 'users']
+
+
+admin.site.register(Project, ProjectAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Type, TypeAdmin)
 admin.site.register(Status, StatusAdmin)
