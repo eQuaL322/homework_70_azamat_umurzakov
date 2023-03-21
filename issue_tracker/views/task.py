@@ -11,17 +11,13 @@ class TaskDetailView(DetailView):
     template_name = 'task_detail.html'
 
 
-class TaskCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'task_add.html'
-    permission_required = 'issue_tracker.create_task'
 
     def get_success_url(self):
         return reverse('task_detail', kwargs={'pk': self.object.pk})
-
-    def test_func(self):
-        return self.get_object().user == self.request.user or self.request.user.has_perm('webapp.create_task')
 
 
 class TaskUpdateView(UpdateView):
