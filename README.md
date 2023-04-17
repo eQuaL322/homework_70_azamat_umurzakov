@@ -1,4 +1,4 @@
-# homework_61_azamat_umurzakov
+# ISSUE TRACKER
 admin-panel
 login: root
 password: root
