@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'issue_tracker',
     'bootstrap5',
     'accounts',
+    'rest_framework',
+    'api',
 ]
 
 MIDDLEWARE = [
